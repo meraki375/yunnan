@@ -96,13 +96,13 @@ export default function JourneyMap() {
             <div className="border-b border-[#102033]/10 p-5 md:border-b-0 md:border-r sm:p-6">
               <p className="font-mono text-[10px] tracking-[0.15em] text-[#C66A2B]">去程 / OUTBOUND · DAY 01—10</p>
               <div className="mt-3 grid gap-x-5 gap-y-2 sm:grid-cols-2">
-                {outboundLegs.map((leg) => <div key={leg.days} className="flex gap-2 text-[11px] leading-5"><span className="font-mono text-[#C66A2B]">{leg.days}</span><p><b className="text-[#102033]">{leg.route}</b><span className="text-[#526A59]"> · {leg.distance}</span></p></div>)}
+                {outboundLegs.map((leg) => <div key={leg.days} className="grid grid-cols-[2.8rem_minmax(0,1fr)] gap-2 text-[11px] leading-5"><span className="whitespace-nowrap font-mono text-[#C66A2B]">{leg.days}</span><p className="min-w-0"><b className="text-[#102033]">{leg.route}</b><span className="text-[#526A59]"> · {leg.distance}</span></p></div>)}
               </div>
             </div>
             <div className="border-b border-[#102033]/10 p-5 md:border-b-0 md:border-r sm:p-6">
               <p className="font-mono text-[10px] tracking-[0.15em] text-[#607E6C]">返程 / RETURN · DAY 11—13</p>
               <div className="mt-3 space-y-2">
-                {returnLegs.map((leg) => <div key={leg.days} className="flex gap-2 text-[11px] leading-5"><span className="font-mono text-[#607E6C]">{leg.days}</span><p><b className="text-[#102033]">{leg.route}</b><span className="text-[#526A59]"> · {leg.distance}</span></p></div>)}
+                {returnLegs.map((leg) => <div key={leg.days} className="grid grid-cols-[2.8rem_minmax(0,1fr)] gap-2 text-[11px] leading-5"><span className="whitespace-nowrap font-mono text-[#607E6C]">{leg.days}</span><p className="min-w-0"><b className="text-[#102033]">{leg.route}</b><span className="text-[#526A59]"> · {leg.distance}</span></p></div>)}
               </div>
             </div>
             <div className="bg-[#FBFAF6] p-5 sm:p-6">
@@ -125,12 +125,11 @@ export default function JourneyMap() {
           </div>
 
           <motion.article key={destination.id} id="route-detail" role="tabpanel" aria-labelledby={`route-tab-${destination.id}`} initial={{ opacity: 0, y: 10, scale: 0.99 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ type: "spring", stiffness: 360, damping: 32 }} className="self-start overflow-hidden rounded-2xl border border-[#102033]/10 bg-white shadow-[0_18px_48px_rgba(16,32,51,0.09)]">
-            <div className="grid md:grid-cols-[0.72fr_1.28fr]">
-              <div className="relative min-h-[300px] md:min-h-full">
-                <Image src={image.url} alt={image.title} fill sizes="(max-width: 767px) 100vw, 34vw" className="object-cover" />
+            <div className="grid">
+              <div className="relative h-[260px] sm:h-[340px] lg:h-[390px]">
+                <Image src={image.url} alt={image.title} fill sizes="(max-width: 1023px) 100vw, 62vw" className="object-cover" style={{ objectPosition: destination.id === "meili" ? "center 48%" : "center" }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#102033]/70 via-[#102033]/5 to-transparent" />
                 <p className="absolute bottom-5 left-5 font-mono text-[10px] tracking-[0.16em] text-white/80">STOP {String(destinations.findIndex((item) => item.id === destination.id) + 1).padStart(2, "0")}</p>
-                <a href={image.sourceUrl} target="_blank" rel="noreferrer" className="absolute right-4 top-4 inline-flex min-h-11 items-center rounded-full border border-white/25 bg-[#102033]/35 px-2.5 py-1 text-[9px] text-white/90 backdrop-blur transition-colors hover:bg-[#102033]/55">参考影像来源 ↗</a>
               </div>
               <div className="p-6 sm:p-8">
                 <div className="flex items-start justify-between gap-4">

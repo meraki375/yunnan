@@ -131,8 +131,6 @@ export default function Footer() {
             <span>数据更新：2026.09</span>
             <span className="hidden h-3 w-px bg-[#102033]/15 sm:block" />
             <span>路线编号：YN-2026-09</span>
-            <span className="hidden h-3 w-px bg-[#102033]/15 sm:block" />
-            <span>封面影像 · 梅里雪山</span>
           </div>
         </div>
       </div>

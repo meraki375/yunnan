@@ -9,7 +9,7 @@ import { TOTAL_DISTANCE, MAX_ALTITUDE } from "@/data/tripData";
 export default function HeroSection() {
   const ref = useRef(null);
   const { scrollY } = useScroll();
-  const bgScale = useTransform(scrollY, [0, 500], [1.1, 1]);
+  const bgScale = useTransform(scrollY, [0, 500], [1.04, 1]);
   const bgY = useTransform(scrollY, [0, 500], [0, 80]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
   const contentY = useTransform(scrollY, [0, 400], [0, -60]);
@@ -56,7 +56,7 @@ export default function HeroSection() {
             onLoad={() => setBgLoaded(true)}
             onError={() => { setImageError(true); setBgLoaded(true); }}
             sizes="100vw"
-            style={{ objectPosition: isMobile ? "42% center" : "center 42%" }}
+            style={{ objectPosition: isMobile ? "44% center" : "center 52%" }}
           />
         </div>
         {showFallback && <div className="absolute inset-0 bg-gradient-to-br from-[#102033] via-[#1a2f45] to-[#0d1a2a]" />}
@@ -157,10 +157,6 @@ export default function HeroSection() {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: bgLoaded ? 1 : 0 }} transition={{ delay: 3 }} className="absolute bottom-4 right-6 md:right-8 z-20 text-[10px] text-white/15 font-mono">
-        路线影像 · 梅里雪山
-      </motion.p>
 
       <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10" style={{ background: "linear-gradient(to bottom, transparent 0%, rgba(8,22,37,0.45) 100%)" }} />
     </section>

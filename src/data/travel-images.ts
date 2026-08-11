@@ -45,12 +45,13 @@ const kunming = image("滇池与西山", "/images/destinations/kunming-dianchi.j
 const dali = image("苍山洱海", "/images/destinations/dali-erhai.jpg", sources.dali, "苍山脚下的洱海与白族村落");
 const shangrila = image("松赞林寺", "/images/destinations/shangrila-songzanlin.jpg", sources.shangrila, "香格里拉松赞林寺的金顶与山谷");
 const meili = image("梅里日照金山", "/images/destinations/meili-sunrise.jpg", sources.meili, "清晨阳光落在梅里雪山的峰顶");
+const heroMeili = image("梅里云海晨光", "/images/route/meili.jpg", sources.meili, "云海铺在梅里雪山脚下的清晨暖光");
 const nanning = image("南宁青秀山", "/images/destinations/nanning-qingxiu.jpg", sources.nanning, "青秀山的龙象塔与林间长廊");
 const lijiang = image("丽江古城", "/images/destinations/lijiang-old-town.jpg", sources.lijiang, "丽江古城的石板路与纳西建筑");
 const baise = image("百色解放街", "/images/destinations/baise-jiefang.jpg", sources.baise, "百色解放街的城市建筑风景");
 
 export const travelImages: TravelImages = {
-  hero: meili,
+  hero: heroMeili,
   dali: { erhai: dali, xizhou: dali, longkan: dali },
   shangrila: { dukezong: shangrila, songzanlin: shangrila, napahai: shangrila },
   meili: { sunrise: meili, feilaiTemple: meili },

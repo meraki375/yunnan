@@ -218,9 +218,6 @@ export default function HotelSection() {
                           <div className="absolute bottom-2.5 left-3 text-[10px] text-white/50 font-mono">
                             {hotel.location}
                           </div>
-                          <span className="absolute bottom-2.5 right-3 text-[9px] text-white/70">
-                            {hotel.image ? "用户提供的住宿实拍" : "本地旅行参考影像"}
-                          </span>
                         </div>
 
                         {/* Content area */}
@@ -381,9 +378,7 @@ export default function HotelSection() {
                         {spot.description}
                       </p>
                       <div className="flex items-center gap-1.5 text-[10px] text-[#A8A29E] mb-3">
-                        <span>📷 {spot.lens}</span>
-                        <span className="h-3 w-px bg-[#A8A29E]/30" />
-                        <span>{spot.image.includes("/hotels/") ? "用户提供实拍" : "旅行参考影像 · 本地存档"}</span>
+                        <span>镜头 · {spot.lens}</span>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {spot.tips.slice(0, 2).map((tip, i) => (
