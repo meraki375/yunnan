@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941" width="1672" height="941">
+  <defs>
+    <filter id="coastBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3" />
+    </filter>
+  </defs>
+  <!-- White = ocean (show overlay), Black = land (hide overlay) -->
+  <!-- Full white base for entire map -->
+  <rect width="1672" height="941" fill="white" />
+  <!-- Black land mask following approximate Guangdong coastline -->
+  <path d="
+    M 0,0
+    L 1672,0
+    L 1672,941
+    L 0,941
+    Z
+    M 1050,0
+    L 1050,80
+    Q 1060,120 1040,160
+    Q 1020,200 1010,240
+    Q 1000,280 1020,320
+    Q 1040,360 1030,400
+    Q 1020,440 1010,470
+    Q 1000,500 1020,520
+    Q 1040,540 1020,570
+    Q 1000,600 980,630
+    Q 960,660 940,690
+    Q 920,720 900,750
+    Q 880,780 860,800
+    Q 840,820 800,840
+    Q 760,860 720,870
+    Q 680,880 650,890
+    Q 620,900 600,920
+    Q 580,941 560,941
+    L 0,941
+    Z
+  " fill="black" filter="url(#coastBlur)" />
+</svg>

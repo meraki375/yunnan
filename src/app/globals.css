@@ -1,23 +1,78 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-background: #f7f9fc;
-  --color-foreground: #111827;
-  --color-sky: #4A90E2;
-  --color-snow: #F7F9FC;
-  --color-forest: #5B8C5A;
-  --color-gold: #D9A441;
-  --color-sunrise: #F4B942;
-  --color-night: #111827;
-  --color-card-bg: rgba(255, 255, 255, 0.85);
-  --color-card-border: rgba(74, 144, 226, 0.1);
-  --font-sans: "Inter", "SF Pro", "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+/* ============================================================
+   统一配色系统 — 深蓝 / 米白 / 陶土橙
+   ============================================================ */
+:root {
+  /* 语义色：页面组件优先从这组 token 取值，避免后续配色分散。 */
+  --surface-page: #f7f3ea;
+  --surface-raised: #fffdf8;
+  --surface-quiet: #e7efe8;
+  --ink-strong: #102033;
+  --ink-body: #334155;
+  --ink-soft: #526a59;
+  --accent-sun: #c66a2b;
+  --accent-risk: #a63d40;
+  --line-subtle: rgba(16, 32, 51, 0.1);
+  --shadow-raised: 0 16px 42px rgba(16, 32, 51, 0.08);
+  --color-navy-deep: #0a1d2d;
+  --color-navy: #173246;
+  --color-text: #18364a;
+  --color-paper: #f3eee4;
+  --color-paper-deep: #e8e0d3;
+  --color-orange: #c96b32;
+  --color-orange-hover: #b85d29;
+  --color-orange-soft: #ead4c3;
+  --color-text-secondary: rgba(24, 54, 74, 0.60);
+  --color-text-muted: rgba(24, 54, 74, 0.42);
+  --color-border: rgba(24, 54, 74, 0.10);
+  --color-sea-near: #dbe6e4;
+  --color-sea-main: #c8dadd;
+  --color-sea-deep: #b9d0d6;
+  --color-sea: #c8d9dc;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+/* ============================================================
+   山海赴约 · 设计系统 token
+   主题: 茶马古道地形图 × 高原摄影画册 × 私人婚旅手记
+   ============================================================ */
+
+@theme inline {
+  /* === 色彩系统 === */
+  --color-night: #102033;       /* 夜色墨蓝 — 封面、深色段落、页脚 */
+  --color-stone: #334155;       /* 高原岩灰 — 辅助正文、地图线 */
+  --color-parchment: #F7F3EA;   /* 羊皮纸白 — 正文主背景 */
+  --color-gold: #C66A2B;        /* 日照金山橙 — 唯一高亮色 */
+  --color-pine: #526A59;        /* 松林绿 — 次级信息、自然元素 */
+  --color-mist: #A8A29E;        /* 雾灰 — 说明文字、分隔线 */
+  --color-charcoal: #1E293B;    /* 深炭灰 — 深色文字 */
+  --color-tibet: #A63D40;       /* 藏区红 — 风险标记 */
+  --color-surface-page: var(--surface-page);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-quiet: var(--surface-quiet);
+  --color-ink-strong: var(--ink-strong);
+  --color-ink-body: var(--ink-body);
+  --color-ink-soft: var(--ink-soft);
+
+  /* === 字体 === */
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", Georgia, "Songti SC", serif;
+  --font-sans: "Inter", "SF Pro Display", "PingFang SC", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* ============================================================
+   全局基础
+   Tailwind 的 Preflight 已处理 reset；不要在无层级 CSS 中重置
+   margin / padding，否则会覆盖 @layer utilities 的 p-*、m-* 类。
+   ============================================================ */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
 }
 
 html {
@@ -25,73 +80,217 @@ html {
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--color-parchment);
+  color: var(--color-charcoal);
   font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
+/* ============================================================
+   滚动条
+   ============================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(82, 106, 89, 0.2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(82, 106, 89, 0.35); }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(74, 144, 226, 0.3);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(74, 144, 226, 0.5);
-}
-
-/* Glass card base */
-.glass-card {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(74, 144, 226, 0.08);
-  border-radius: 20px;
-}
-
-.glass-card-dark {
-  background: rgba(17, 24, 39, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-}
-
-/* Section styling */
+/* ============================================================
+   阅读宽度容器
+   ============================================================ */
 .section-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 24px;
+  padding: 120px 40px;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+@media (max-width: 768px) {
+  .section-container { padding: 80px 24px; }
 }
 
+/* 叙事文字窄容器 */
+.narrative-container {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   Section 标题统一结构
+   01 / ROUTE
+   中文标题
+   编辑导语
+   ────── 分隔线
+   ============================================================ */
+.section-header {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .section-header { margin-bottom: 40px; }
+}
+
+.section-number {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--color-mist);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-night);
+  letter-spacing: -0.01em;
+}
+
+.section-title .highlight {
+  color: var(--color-gold);
+}
+
+.section-editorial {
+  font-size: clamp(0.875rem, 1.2vw, 0.9375rem);
+  line-height: 1.6;
+  color: var(--color-mist);
+  max-width: 520px;
+  margin: 12px auto 0;
+}
+
+.section-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--color-gold);
+  margin: 20px auto 0;
+  opacity: 0.5;
+}
+
+/* ============================================================
+   图片通用样式
+   ============================================================ */
+.img-zoom-wrapper {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.img-zoom-wrapper img {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom-wrapper:hover img {
+  transform: scale(1.06);
+}
+
+/* 图片渐变骨架占位 */
+.img-placeholder {
+  background: linear-gradient(135deg, var(--color-parchment) 0%, #EDE8DD 50%, var(--color-parchment) 100%);
+  background-size: 200% 200%;
+  animation: shimmer-bg 2s ease-in-out infinite;
+}
+
+@keyframes shimmer-bg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============================================================
+   卡片基础
+   ============================================================ */
+.magazine-card {
+  background: white;
+  border: 1px solid rgba(162, 158, 148, 0.12);
+  border-radius: 12px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.magazine-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(16, 32, 51, 0.06);
+}
+
+/* ============================================================
+   动画
+   ============================================================ */
+/* 云朵飘动 */
+@keyframes cloud-drift {
+  0% { transform: translateX(-10%); opacity: 0.15; }
+  50% { opacity: 0.25; }
+  100% { transform: translateX(110%); opacity: 0.1; }
+}
+.animate-cloud {
+  animation: cloud-drift 50s linear infinite;
+}
+
+/* 山脉微光 */
+@keyframes mountain-shimmer {
+  0%, 100% { opacity: 0.08; }
+  50% { opacity: 0.16; }
+}
+.animate-mountain {
+  animation: mountain-shimmer 8s ease-in-out infinite;
+}
+
+/* 金色脉冲环 */
+@keyframes gold-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(198, 106, 43, 0.25); }
+  100% { box-shadow: 0 0 0 16px rgba(198, 106, 43, 0); }
+}
+.animate-gold-pulse {
+  animation: gold-pulse 2.5s ease-out infinite;
+}
+
+/* 微浮动 */
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
 .animate-float {
-  animation: float 6s ease-in-out infinite;
+  animation: gentle-float 6s ease-in-out infinite;
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* ============================================================
+   prefers-reduced-motion 尊重
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, #4A90E2 0%, #5B8C5A 50%, #D9A441 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* ============================================================
+   Print 样式
+   ============================================================ */
+@media print {
+  nav, .no-print { display: none !important; }
+}
+
+/* ============================================================
+   Hero mobile overrides — short & tall screen
+   ============================================================ */
+@media (max-height: 760px) and (max-width: 767px) {
+  .hero-short-screen {
+    top: 23% !important;
+  }
+  .hero-short-screen h1 {
+    font-size: clamp(46px, 13vw, 56px) !important;
+  }
+  .hero-short-screen .hero-stats-grid {
+    row-gap: 16px !important;
+  }
+}
+
+@media (min-height: 901px) and (max-width: 767px) {
+  .hero-tall-screen {
+    top: 31% !important;
+  }
 }
