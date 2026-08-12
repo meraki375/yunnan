@@ -19,8 +19,8 @@ type CostInputs = {
 };
 
 const DAYS = 13;
-const PENDING_HOTEL_NIGHTS = 5;
-const CONFIRMED_STAYS = 780 + 694.96 + 317;
+const PENDING_HOTEL_NIGHTS = 4;
+const CONFIRMED_STAYS = 298 + 780 + 694.96 + 317;
 
 const INITIAL_INPUTS: CostInputs = {
   travelers: 2,
@@ -211,7 +211,7 @@ export default function CostCalculatorSection() {
             </div>
 
             <div className="mt-5 rounded-xl bg-[#F7F3EA] px-4 py-3 text-[11px] leading-relaxed text-[#526A59]">
-              待订住宿包括昆明 1 晚、飞来寺 2 晚、丽江 1 晚、百色 1 晚。玉林为家中团圆，不计酒店费用。
+              待订住宿包括飞来寺 2 晚、丽江 1 晚、百色 1 晚。玉林为家中团圆，不计酒店费用；昆明、大理与香格里拉住宿已确认。
             </div>
           </div>
         </motion.div>

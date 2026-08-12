@@ -14,7 +14,7 @@ const stopDays: Record<string, string> = {
 
 const outboundLegs = [
   { days: "D1", route: "深圳 → 玉林", distance: "460 km · 6–7 h", note: "中秋回家团圆" },
-  { days: "D2", route: "玉林 → 昆明", distance: "850 km · 10–11 h", note: "百色午餐 · 夜市一晚" },
+  { days: "D2", route: "玉林 → 昆明", distance: "850 km · 10–11 h", note: "百色午餐 · 酒店已订 · 夜市一晚" },
   { days: "D3–5", route: "昆明 → 大理", distance: "330 km · 3.5–4.5 h", note: "三晚已订 · 婚纱照" },
   { days: "D6–8", route: "大理 → 香格里拉", distance: "180 km · 3.5–4.5 h", note: "三晚均已确认" },
   { days: "D9–10", route: "香格里拉 → 飞来寺", distance: "180 km · 4–5 h", note: "白马雪山 · 日照金山" },
@@ -107,8 +107,8 @@ export default function JourneyMap() {
             </div>
             <div className="bg-[#FBFAF6] p-5 sm:p-6">
               <p className="font-mono text-[10px] tracking-[0.15em] text-[#526A59]">住宿进度 / STAYS</p>
-              <p className="mt-3 text-sm font-semibold text-[#102033]">玉林家中 · 大理3晚 · 香格里拉3晚</p>
-              <p className="mt-2 text-[11px] leading-5 text-[#526A59]">已确认 4 项；昆明、飞来寺、丽江、百色仍待预订。</p>
+              <p className="mt-3 text-sm font-semibold text-[#102033]">玉林家中 · 昆明1晚 · 大理3晚 · 香格里拉3晚</p>
+              <p className="mt-2 text-[11px] leading-5 text-[#526A59]">已确认 5 项；飞来寺、丽江、百色仍待预订。</p>
             </div>
           </figcaption>
         </motion.figure>
