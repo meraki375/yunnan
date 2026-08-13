@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { hotelsData, photoSpots } from "@/data/tripData";
+import { photoSpots } from "@/data/tripData";
 import { destinationImages, travelImages } from "@/data/travel-images";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { getHotelsForReturnPlan, RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
 
 // ===== Image helpers =====
 const getCityAtmosphereImage = (city: string) => {
@@ -45,6 +46,16 @@ const altitudeCities = [
   { city: "百色", alt: 130, temp: "27°C", advice: ["短袖", "补水"] },
 ];
 
+const mainAltitudeCities = [
+  ...altitudeCities.filter((city) => city.city !== "百色"),
+  { city: "南宁", alt: 80, temp: "28°C", advice: ["短袖", "防晒"] },
+];
+
+const backupAltitudeCities = [
+  ...altitudeCities.filter((city) => city.city !== "白马雪山垭口" && city.city !== "飞来寺" && city.city !== "百色"),
+  { city: "南宁", alt: 80, temp: "28°C", advice: ["短袖", "防晒"] },
+];
+
 const maxAlt = 4500;
 
 // ===== Main Section =====
@@ -55,9 +66,16 @@ export default function HotelSection() {
   const [expandedPhotos, setExpandedPhotos] = useState(false);
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [savedNotice, setSavedNotice] = useState("");
+  const [returnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
+  const routeHotels = getHotelsForReturnPlan(returnPlan);
+  const routeAltitudeCities = returnPlan === "weather" ? backupAltitudeCities : mainAltitudeCities;
+  const routeMaxAlt = returnPlan === "weather" ? 3500 : maxAlt;
+  const routePhotoSpots = returnPlan === "weather"
+    ? photoSpots.filter((spot) => !/(梅里|飞来寺|日照金山|白马雪山|百色)/.test(spot.name))
+    : photoSpots.filter((spot) => !/百色/.test(spot.name));
 
-  const confirmedHotels = hotelsData.filter((h) => h.confirmed);
-  const pendingHotels = hotelsData.filter((h) => !h.confirmed);
+  const confirmedHotels = routeHotels.filter((h) => h.confirmed);
+  const pendingHotels = routeHotels.filter((h) => !h.confirmed);
   const visibleConfirmedHotels = showSavedOnly
     ? confirmedHotels.filter((hotel) => savedHotels.includes(hotel.id))
     : confirmedHotels;
@@ -185,7 +203,7 @@ export default function HotelSection() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                           <div className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-[#526A59]/80 backdrop-blur-sm text-[10px] text-white font-mono flex items-center gap-1">
                             <span className="w-1 h-1 rounded-full bg-white" />
-                            已确认
+                            {hotel.id === "stay-feilai-car" ? "车宿已确认" : "已确认"}
                           </div>
 
                           {/* Save button - subdued */}
@@ -336,7 +354,7 @@ export default function HotelSection() {
               transition={{ duration: 0.3 }}
             >
               <div className="max-w-4xl mx-auto space-y-6">
-                {photoSpots.slice(0, expandedPhotos ? photoSpots.length : 3).map((spot, index) => (
+                {routePhotoSpots.slice(0, expandedPhotos ? routePhotoSpots.length : 3).map((spot, index) => (
                   <motion.div
                     key={spot.id}
                     initial={{ opacity: 0, y: 16 }}
@@ -396,14 +414,14 @@ export default function HotelSection() {
               </div>
 
               {/* Expand toggle */}
-              {photoSpots.length > 3 && (
+              {routePhotoSpots.length > 3 && (
                 <div className="text-center mt-6">
                   <motion.button
                     onClick={() => setExpandedPhotos(!expandedPhotos)}
                     whileTap={{ scale: 0.96 }}
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#A8A29E]/20 text-xs text-[#A8A29E] hover:text-[#526A59] hover:border-[#526A59]/30 transition-all"
                   >
-                    {expandedPhotos ? "收起" : `查看全部 ${photoSpots.length} 个拍摄点`}
+                    {expandedPhotos ? "收起" : `查看全部 ${routePhotoSpots.length} 个拍摄点`}
                     <svg
                       width="10"
                       height="10"
@@ -434,7 +452,7 @@ export default function HotelSection() {
               {/* ===== Altitude Profile Line ===== */}
               <div className="max-w-4xl mx-auto mb-16">
                 <h3 className="text-[11px] font-mono uppercase tracking-wider text-[#A8A29E] mb-6 text-center">
-                  海拔剖面 — 深圳至梅里
+                  海拔剖面 — {returnPlan === "weather" ? "深圳至香格里拉后分段返程" : "深圳至梅里"}
                 </h3>
                 <div className="relative h-32 bg-white rounded-xl border border-[#A8A29E]/10 p-3">
                   <svg
@@ -444,7 +462,7 @@ export default function HotelSection() {
                   >
                     {/* Grid lines */}
                     {[0, 1000, 2000, 3000].map((alt) => {
-                      const y = 115 - (alt / maxAlt) * 100;
+                      const y = 115 - (alt / routeMaxAlt) * 100;
                       return (
                         <g key={alt}>
                           <line
@@ -479,10 +497,10 @@ export default function HotelSection() {
 
                     {/* Profile path */}
                     <path
-                      d={altitudeCities
+                      d={routeAltitudeCities
                         .map((c, i) => {
-                          const x = (i / (altitudeCities.length - 1)) * 950 + 25;
-                          const y = 115 - (c.alt / maxAlt) * 100;
+                          const x = (i / (routeAltitudeCities.length - 1)) * 950 + 25;
+                          const y = 115 - (c.alt / routeMaxAlt) * 100;
                           return `${i === 0 ? "M" : "L"}${x},${y}`;
                         })
                         .join(" ")}
@@ -492,22 +510,22 @@ export default function HotelSection() {
                     />
                     <path
                       d={
-                        altitudeCities
+                        routeAltitudeCities
                           .map((c, i) => {
-                            const x = (i / (altitudeCities.length - 1)) * 950 + 25;
-                            const y = 115 - (c.alt / maxAlt) * 100;
+                            const x = (i / (routeAltitudeCities.length - 1)) * 950 + 25;
+                            const y = 115 - (c.alt / routeMaxAlt) * 100;
                             return `${i === 0 ? "M" : "L"}${x},${y}`;
                           })
                           .join(" ") +
-                        `L${(altitudeCities.length - 1) / (altitudeCities.length - 1) * 950 + 25},115 L25,115 Z`
+                        `L${(routeAltitudeCities.length - 1) / (routeAltitudeCities.length - 1) * 950 + 25},115 L25,115 Z`
                       }
                       fill="url(#altGradient)"
                     />
 
                     {/* City dots and labels */}
-                    {altitudeCities.map((c, i) => {
-                      const x = (i / (altitudeCities.length - 1)) * 950 + 25;
-                      const y = 115 - (c.alt / maxAlt) * 100;
+                    {routeAltitudeCities.map((c, i) => {
+                      const x = (i / (routeAltitudeCities.length - 1)) * 950 + 25;
+                      const y = 115 - (c.alt / routeMaxAlt) * 100;
                       const isHigh = c.alt > 3000;
                       const isLow = c.alt < 100;
                       return (
@@ -547,16 +565,16 @@ export default function HotelSection() {
                   </svg>
 
                   {/* Altitude warning for high points */}
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-4 text-[10px] font-mono">
+                  {returnPlan === "main" && <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-4 text-[10px] font-mono">
                     <span className="text-[#A63D40]">▲ 4300m 白马雪山垭口</span>
                     <span className="text-[#A8A29E]">— 注意高反 —</span>
-                  </div>
+                  </div>}
                 </div>
               </div>
 
               {/* ===== City Cards - compact ===== */}
               <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {altitudeCities.map((city, index) => {
+                {routeAltitudeCities.map((city, index) => {
                   const altitudeNum = city.alt;
                   const isHigh = altitudeNum > 3000;
                   const isLow = altitudeNum < 100;
@@ -624,7 +642,7 @@ export default function HotelSection() {
               </div>
 
               {/* Altitude hazard notice - placed between Shangri-La and Meili */}
-              <motion.div
+              {returnPlan === "main" ? <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -644,7 +662,16 @@ export default function HotelSection() {
                   ① 选择供氧房住宿 · ② 抵达后24小时内避免洗澡
                   ③ 随身携带便携氧气瓶 · ④ 放缓步行节奏
                 </p>
-              </motion.div>
+              </motion.div> : <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="max-w-xl mx-auto mt-10 p-4 rounded-xl border border-[#607E6C]/18 bg-[#E7EFE8] text-center"
+              >
+                <p className="text-xs font-medium text-[#466151]">备选路线已避开白马雪山垭口与飞来寺</p>
+                <p className="mt-1 text-[11px] leading-relaxed text-[#526A59]">最高海拔停留在香格里拉约 3300m，随后经丽江、昆明，在南宁连住两晚后回深圳。</p>
+              </motion.div>}
             </motion.div>
           )}
         </AnimatePresence>

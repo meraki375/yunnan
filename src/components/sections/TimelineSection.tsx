@@ -3,8 +3,8 @@
 import { useMemo } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { MAX_ALTITUDE, TOTAL_DISTANCE, tripDays } from "@/data/tripData";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { getMaxAltitudeForReturnPlan, getRouteDistanceForReturnPlan, getTripDaysForReturnPlan, RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
 
 const dayImages: Record<string, string> = {
   "Day 1": "/images/destinations/yulin-yuntian.jpg",
@@ -16,9 +16,9 @@ const dayImages: Record<string, string> = {
   "Day 7": "/images/destinations/shangrila-songzanlin.jpg",
   "Day 8": "/images/destinations/shangrila-songzanlin.jpg",
   "Day 9": "/images/destinations/meili-sunrise.jpg",
-  "Day 10": "/images/destinations/meili-sunrise.jpg",
-  "Day 11": "/images/destinations/lijiang-old-town.jpg",
-  "Day 12": "/images/destinations/baise-jiefang.jpg",
+  "Day 10": "/images/destinations/lijiang-old-town.jpg",
+  "Day 11": "/images/destinations/kunming-dianchi.jpg",
+  "Day 12": "/images/destinations/nanning-qingxiu.jpg",
   "Day 13": "/images/destinations/shenzhen-bay.jpg",
 };
 
@@ -29,7 +29,7 @@ const typeLabel: Record<string, string> = {
   evening: "夜晚",
 };
 
-const stopForDay: Record<string, string> = {
+const mainStopForDay: Record<string, string> = {
   "Day 1": "yulin",
   "Day 2": "kunming",
   "Day 3": "dali",
@@ -45,18 +45,51 @@ const stopForDay: Record<string, string> = {
   "Day 13": "shenzhen",
 };
 
+const weatherStopForDay: Record<string, string> = {
+  ...mainStopForDay,
+  "Day 9": "lijiang",
+  "Day 10": "kunming",
+  "Day 11": "nanning",
+  "Day 12": "nanning",
+  "Day 13": "shenzhen",
+};
+
+const weatherDayImages: Record<string, string> = {
+  ...dayImages,
+  "Day 9": "/images/destinations/lijiang-old-town.jpg",
+  "Day 10": "/images/destinations/kunming-dianchi.jpg",
+  "Day 11": "/images/destinations/nanning-qingxiu.jpg",
+  "Day 12": "/images/destinations/nanning-qingxiu.jpg",
+};
+
 function dayNumber(day: string) {
   return day.replace("Day ", "").padStart(2, "0");
+}
+
+function dayRouteLabel(from: string, to: string) {
+  return from === to ? from : `${from} → ${to}`;
 }
 
 export default function TimelineSection() {
   const [activeDay, setActiveDay] = useLocalStorageState("shanhai-yueyue:active-day", "Day 4");
   const [, setSelectedStop] = useLocalStorageState("shanhai-yueyue:selected-stop", "dali");
+  const [returnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
+  const activeTripDays = getTripDaysForReturnPlan(returnPlan);
+  const routeDistance = getRouteDistanceForReturnPlan(returnPlan);
+  const maxAltitude = getMaxAltitudeForReturnPlan(returnPlan);
+  const stopForDay = returnPlan === "weather" ? weatherStopForDay : mainStopForDay;
+  const images = returnPlan === "weather" ? weatherDayImages : dayImages;
   const selected = useMemo(
-    () => tripDays.find((day) => day.day === activeDay) ?? tripDays[0],
-    [activeDay],
+    () => activeTripDays.find((day) => day.day === activeDay) ?? activeTripDays[0],
+    [activeDay, activeTripDays],
   );
-  const special = selected.day === "Day 4" || selected.day === "Day 5" ? "洱海边，把誓言留给晨光" : selected.day === "Day 10" ? "在梅里，等一座山慢慢发亮" : "把下一段风景，交给车轮和时间";
+  const special = selected.day === "Day 4" || selected.day === "Day 5"
+    ? "洱海边，把誓言留给晨光"
+    : returnPlan === "main" && selected.day === "Day 10"
+      ? "在梅里，等一座山慢慢发亮"
+      : returnPlan === "weather" && selected.day === "Day 9"
+        ? "不追天气，把归途开得更从容"
+        : "把下一段风景，交给车轮和时间";
   const selectDay = (day: string) => {
     setActiveDay(day);
     setSelectedStop(stopForDay[day]);
@@ -70,18 +103,18 @@ export default function TimelineSection() {
             <span className="section-number">02 / ITINERARY</span>
             <h2 className="section-title text-left">把日子，开成一条<span className="highlight">路</span></h2>
             <p className="mt-4 text-sm leading-7 text-[#526A59]">
-              不赶抵达，也不浪费沿途。每一页都记下时间、天气，以及此刻最值得停下来的地方。
+              {returnPlan === "weather" ? "已启用天气备选：飞来寺段已替换为丽江、昆明、南宁两晚休整后直达深圳。" : "主线：飞来寺住一晚看完日照金山后，经丽江、昆明、南宁回深圳。"}
             </p>
           </div>
           <div className="grid grid-cols-3 divide-x divide-[#A8A29E]/20 rounded-xl border border-[#A8A29E]/15 bg-[#F7F3EA] px-2 py-3 text-center sm:min-w-96">
             <div><b className="block font-serif text-xl text-[#102033]">13</b><span className="text-[10px] text-[#A8A29E]">旅行天数</span></div>
-            <div><b className="block font-serif text-xl text-[#102033]">{TOTAL_DISTANCE}</b><span className="text-[10px] text-[#A8A29E]">总里程 / km</span></div>
-            <div><b className="block font-serif text-xl text-[#102033]">{MAX_ALTITUDE}</b><span className="text-[10px] text-[#A8A29E]">最高海拔 / m</span></div>
+            <div><b className="block font-serif text-xl text-[#102033]">{routeDistance}</b><span className="text-[10px] text-[#A8A29E]">总里程 / km</span></div>
+            <div><b className="block font-serif text-xl text-[#102033]">{maxAltitude}</b><span className="text-[10px] text-[#A8A29E]">最高海拔 / m</span></div>
           </div>
         </div>
 
         <div role="tablist" aria-label="每日行程" className="mt-12 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
-          {tripDays.map((day) => {
+          {activeTripDays.map((day) => {
             const active = day.day === activeDay;
             return (
               <motion.button
@@ -101,7 +134,7 @@ export default function TimelineSection() {
               >
                 {active && <motion.span layoutId="active-day-glow" className="absolute inset-x-3 bottom-0 h-0.5 rounded-full bg-[#C66A2B]" transition={{ type: "spring", stiffness: 420, damping: 30 }} />}
                 <span className={`block font-mono text-[10px] ${active ? "text-[#C66A2B]" : "text-[#A8A29E]"}`}>DAY {dayNumber(day.day)}</span>
-                <span className="mt-1 block text-xs font-semibold text-[#102033]">{day.from} → {day.to}</span>
+                <span className="mt-1 block text-xs font-semibold text-[#102033]">{dayRouteLabel(day.from, day.to)}</span>
                 <span className="mt-1 block text-[10px] text-[#A8A29E]">{day.date} · {day.distance}</span>
               </motion.button>
             );
@@ -109,7 +142,7 @@ export default function TimelineSection() {
         </div>
 
         <motion.article
-          key={selected.day}
+          key={`${returnPlan}-${selected.day}`}
           id="day-detail"
           role="tabpanel"
           aria-labelledby={`day-tab-${dayNumber(selected.day)}`}
@@ -119,11 +152,11 @@ export default function TimelineSection() {
           className="mt-6 grid overflow-hidden rounded-2xl border border-[#102033]/10 bg-[#102033] lg:grid-cols-[0.82fr_1.18fr]"
         >
           <div className="relative min-h-72 lg:min-h-full">
-            <Image src={dayImages[selected.day]} alt={`${selected.to} 行程氛围图`} fill sizes="(max-width: 1023px) 100vw, 38vw" className="object-cover" />
+            <Image src={images[selected.day]} alt={`${selected.to} 行程氛围图`} fill sizes="(max-width: 1023px) 100vw, 38vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#102033] via-[#102033]/35 to-transparent lg:bg-gradient-to-r" />
             <div className="absolute inset-x-6 bottom-6 text-white">
               <p className="font-mono text-[11px] tracking-[0.16em] text-[#D89B3C]">DAY {dayNumber(selected.day)} · {selected.date}</p>
-              <h3 className="mt-2 font-serif text-3xl">{selected.from} → {selected.to}</h3>
+              <h3 className="mt-2 font-serif text-3xl">{dayRouteLabel(selected.from, selected.to)}</h3>
               <p className="mt-2 text-sm text-white/65">{special}</p>
             </div>
           </div>

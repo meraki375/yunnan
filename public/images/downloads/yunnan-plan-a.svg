@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1280" viewBox="0 0 1800 1280">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f9fbf8"/><stop offset="1" stop-color="#f4efe4"/></linearGradient>
+    <filter id="s"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#102033" flood-opacity=".1"/></filter>
+  </defs>
+  <rect width="1800" height="1280" fill="url(#bg)"/>
+  <g transform="translate(52 42)" filter="url(#s)">
+    <rect width="1085" height="1196" rx="24" fill="#fffdf8" stroke="#315e9c" stroke-width="2"/>
+    <text x="52" y="76" fill="#102c62" font-family="serif" font-size="52" font-weight="700">深圳 → 云南 13 天自驾攻略</text>
+    <text x="52" y="116" fill="#c66a2b" font-family="monospace" font-size="19" letter-spacing="4">PLAN A / 梅里主线 · 飞来寺车宿版</text>
+    <text x="52" y="151" fill="#526a59" font-family="sans-serif" font-size="24">深圳 → 玉林 → 昆明 → 大理 → 香格里拉 → 飞来寺 → 丽江 → 昆明 → 南宁 → 深圳</text>
+    <g transform="translate(52 185)"><rect width="982" height="88" rx="15" fill="#f5f8f6" stroke="#607e6c" stroke-opacity=".34"/>
+      <g font-family="sans-serif"><text x="34" y="34" font-size="18" fill="#526a59">总时长</text><text x="34" y="65" font-size="26" font-weight="700" fill="#102033">9.25 — 10.07 · 13天</text><text x="285" y="34" font-size="18" fill="#526a59">自驾里程</text><text x="285" y="65" font-size="26" font-weight="700" fill="#102033">约 4380 km</text><text x="530" y="34" font-size="18" fill="#526a59">最高海拔</text><text x="530" y="65" font-size="26" font-weight="700" fill="#102033">约 4300m</text><text x="755" y="34" font-size="18" fill="#526a59">核心体验</text><text x="755" y="65" font-size="24" font-weight="700" fill="#102033">车宿 / 日照金山</text></g></g>
+    <g transform="translate(52 305)"><rect width="982" height="500" rx="18" fill="#f2f6f1" stroke="#315e9c" stroke-opacity=".5"/>
+      <text x="30" y="38" fill="#526a59" font-family="monospace" font-size="16" letter-spacing="3">ROUTE MAP / 主线</text>
+      <path d="M855 420 C760 430 690 412 620 385 S475 330 385 295 S262 230 200 205 S140 160 105 115" fill="none" stroke="#d16a27" stroke-width="10" stroke-linecap="round"/><path d="M105 115 C195 150 285 185 350 205 S380 265 385 295 S540 345 620 385 S760 420 855 420" fill="none" stroke="#567d69" stroke-width="10" stroke-linecap="round"/>
+      <g stroke="#fffdf8" stroke-width="6"><circle cx="855" cy="420" r="13" fill="#d16a27"/><circle cx="740" cy="425" r="13" fill="#d16a27"/><circle cx="620" cy="385" r="13" fill="#d16a27"/><circle cx="505" cy="340" r="13" fill="#d16a27"/><circle cx="385" cy="295" r="13" fill="#d16a27"/><circle cx="200" cy="205" r="13" fill="#d16a27"/><circle cx="105" cy="115" r="13" fill="#d16a27"/><circle cx="350" cy="205" r="13" fill="#567d69"/><circle cx="385" cy="295" r="13" fill="#567d69"/><circle cx="620" cy="385" r="13" fill="#567d69"/><circle cx="740" cy="425" r="13" fill="#567d69"/><circle cx="855" cy="420" r="13" fill="#567d69"/></g>
+      <g font-family="sans-serif" fill="#102033" font-size="21" font-weight="700"><text x="810" y="465">深圳</text><text x="700" y="478">玉林</text><text x="575" y="438">昆明</text><text x="462" y="382">大理</text><text x="325" y="340">香格里拉</text><text x="145" y="184">飞来寺</text><text x="307" y="184">丽江</text><text x="686" y="380">南宁</text></g>
+      <g font-family="monospace" fill="#526a59" font-size="13"><text x="810" y="488">D1 / D13</text><text x="700" y="501">D1</text><text x="575" y="461">D2 / D11</text><text x="462" y="405">D3–5</text><text x="325" y="363">D6–8</text><text x="145" y="207">D9 · 车宿</text><text x="307" y="207">D10</text><text x="686" y="403">D12</text></g>
+      <g transform="translate(43 62)"><rect width="150" height="92" rx="10" fill="#fffdf8" opacity=".94"/><text x="16" y="31" fill="#c66a2b" font-family="monospace" font-size="14">主线亮点</text><text x="16" y="58" fill="#102033" font-family="sans-serif" font-size="16" font-weight="700">飞来寺车宿</text><text x="16" y="79" fill="#526a59" font-family="sans-serif" font-size="13">日照金山</text></g>
+    </g>
+    <g transform="translate(52 840)" font-family="sans-serif"><text y="0" fill="#102033" font-size="26" font-weight="700">行程亮点</text><text y="34" fill="#526a59" font-size="18">中秋玉林团圆 · 大理婚纱照 · 香格里拉三晚 · 飞来寺车宿等日照金山</text>
+      <text x="510" y="0" fill="#102033" font-size="26" font-weight="700">注意事项</text><text x="510" y="34" fill="#526a59" font-size="18">白马雪山高海拔 · 车宿先确认停车与夜间管理 · 保暖睡袋/氧气/电源</text></g>
+    <g transform="translate(52 920)" font-family="sans-serif"><rect width="982" height="220" rx="16" fill="#f8fbf8" stroke="#607e6c" stroke-opacity=".28"/><text x="26" y="36" fill="#102033" font-size="21" font-weight="700">住宿状态</text><text x="26" y="69" fill="#526a59" font-size="18">已确定：玉林家中 1 晚 · 昆明曼棠 V 酒店 1 晚 · 大理 3 晚 · 香格里拉 3 晚 · 飞来寺车宿 1 晚</text><text x="26" y="104" fill="#c66a2b" font-size="18">待订：丽江 1 晚 · 昆明返程 1 晚 · 南宁 1 晚</text><line x1="26" y1="129" x2="956" y2="129" stroke="#102033" stroke-opacity=".12"/><text x="26" y="164" fill="#102033" font-size="18" font-weight="700">返程分段</text><text x="26" y="195" fill="#526a59" font-size="17">D10 飞来寺 → 丽江 ｜ D11 丽江 → 昆明 ｜ D12 昆明 → 南宁 ｜ D13 南宁 → 深圳</text></g>
+  </g>
+  <g transform="translate(1170 42)" filter="url(#s)"><rect width="578" height="1196" rx="24" fill="#fffdf8" stroke="#315e9c" stroke-opacity=".55"/>
+    <text x="44" y="62" fill="#102033" font-family="sans-serif" font-size="30" font-weight="700">详细每日行程</text>
+    <g font-family="sans-serif" font-size="18">
+      <g transform="translate(34 92)"><rect width="510" height="72" rx="12" fill="#eef6ef" stroke="#74a078"/><text x="16" y="27" fill="#466151" font-weight="700">D1  深圳 → 玉林</text><text x="16" y="53" fill="#526a59">460km · 中秋团圆 · 家中住 1 晚</text></g>
+      <g transform="translate(34 174)"><rect width="510" height="72" rx="12" fill="#eef6ef" stroke="#74a078"/><text x="16" y="27" fill="#466151" font-weight="700">D2  玉林 → 昆明</text><text x="16" y="53" fill="#526a59">850km · 昆明夜市 · 曼棠 V 酒店</text></g>
+      <g transform="translate(34 256)"><rect width="510" height="72" rx="12" fill="#f6f9ff" stroke="#6f9bd4"/><text x="16" y="27" fill="#315e9c" font-weight="700">D3  昆明 → 大理</text><text x="16" y="53" fill="#526a59">330km · 入住大理 · 婚纱照行程开始</text></g>
+      <g transform="translate(34 338)"><rect width="510" height="72" rx="12" fill="#f6f9ff" stroke="#6f9bd4"/><text x="16" y="27" fill="#315e9c" font-weight="700">D4  大理</text><text x="16" y="53" fill="#526a59">龙龛码头 · 海东公路 · 住宿已订</text></g>
+      <g transform="translate(34 420)"><rect width="510" height="72" rx="12" fill="#f6f9ff" stroke="#6f9bd4"/><text x="16" y="27" fill="#315e9c" font-weight="700">D5  大理</text><text x="16" y="53" fill="#526a59">全天婚纱照拍摄 · 洱海时光</text></g>
+      <g transform="translate(34 502)"><rect width="510" height="72" rx="12" fill="#f8f2ff" stroke="#8d76c9"/><text x="16" y="27" fill="#704eb3" font-weight="700">D6  大理 → 香格里拉</text><text x="16" y="53" fill="#526a59">180km · 独克宗古城 · 供氧住宿</text></g>
+      <g transform="translate(34 584)"><rect width="510" height="72" rx="12" fill="#f8f2ff" stroke="#8d76c9"/><text x="16" y="27" fill="#704eb3" font-weight="700">D7  香格里拉</text><text x="16" y="53" fill="#526a59">松赞林寺 · 独克宗 · 供氧住宿</text></g>
+      <g transform="translate(34 666)"><rect width="510" height="72" rx="12" fill="#f8f2ff" stroke="#8d76c9"/><text x="16" y="27" fill="#704eb3" font-weight="700">D8  香格里拉</text><text x="16" y="53" fill="#526a59">纳帕海环湖 · 第三晚已确认</text></g>
+      <g transform="translate(34 748)"><rect width="510" height="72" rx="12" fill="#fff4e9" stroke="#d16a27"/><text x="16" y="27" fill="#b95119" font-weight="700">D9  香格里拉 → 飞来寺</text><text x="16" y="53" fill="#526a59">180km · 车宿 1 晚 · 梅里日落</text></g>
+      <g transform="translate(34 830)"><rect width="510" height="72" rx="12" fill="#fff4e9" stroke="#d16a27"/><text x="16" y="27" fill="#b95119" font-weight="700">D10  飞来寺 → 丽江</text><text x="16" y="53" fill="#526a59">340km · 日照金山后返程</text></g>
+      <g transform="translate(34 912)"><rect width="510" height="72" rx="12" fill="#f3f5f4" stroke="#98a4a0"/><text x="16" y="27" fill="#466151" font-weight="700">D11  丽江 → 昆明</text><text x="16" y="53" fill="#526a59">520km · 昆明待订 1 晚</text></g>
+      <g transform="translate(34 994)"><rect width="510" height="72" rx="12" fill="#f3f5f4" stroke="#98a4a0"/><text x="16" y="27" fill="#466151" font-weight="700">D12  昆明 → 南宁</text><text x="16" y="53" fill="#526a59">800km · 南宁待订 1 晚</text></g>
+      <g transform="translate(34 1076)"><rect width="510" height="72" rx="12" fill="#f3f5f4" stroke="#98a4a0"/><text x="16" y="27" fill="#466151" font-weight="700">D13  南宁 → 深圳</text><text x="16" y="53" fill="#526a59">720km · 安全抵达 · 旅途收束</text></g>
+    </g>
+  </g>
+</svg>

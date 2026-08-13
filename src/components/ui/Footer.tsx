@@ -46,7 +46,7 @@ export default function Footer() {
             <p className="max-w-md text-xs leading-relaxed text-[#334155]">
               一册写给山川与彼此的自驾路书
               <br />
-              深圳出发 · 玉林 · 昆明 · 大理 · 香格里拉 · 梅里 · 丽江 · 百色 · 深圳
+              深圳出发 · 玉林 · 昆明 · 大理 · 香格里拉 · 梅里 · 丽江 · 昆明 · 南宁 · 深圳
               <br />
               2026 中秋 × 国庆 · 婚纱照之旅
             </p>
@@ -57,7 +57,7 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#526A59]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#C66A2B]" />
-                3960 KM
+                4040–4380 KM
               </div>
               <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#526A59]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#A63D40]" />

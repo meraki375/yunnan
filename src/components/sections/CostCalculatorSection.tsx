@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { TOTAL_DISTANCE } from "@/data/tripData";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { getPendingHotelNights, getPendingHotelSummary, getRouteDistanceForReturnPlan, RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
 
 type CostInputs = {
   travelers: number;
@@ -19,7 +19,6 @@ type CostInputs = {
 };
 
 const DAYS = 13;
-const PENDING_HOTEL_NIGHTS = 4;
 const CONFIRMED_STAYS = 298 + 780 + 694.96 + 317;
 
 const INITIAL_INPUTS: CostInputs = {
@@ -100,6 +99,7 @@ function NumberField({ label, hint, value, prefix = "¥", suffix, onChange }: Nu
 
 export default function CostCalculatorSection() {
   const [inputs, setInputs] = useLocalStorageState<CostInputs>("shanhai-yueyue:cost-inputs", INITIAL_INPUTS);
+  const [returnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
   const [lastChanged, setLastChanged] = useState<keyof CostInputs | null>(null);
   const update = <K extends keyof CostInputs>(key: K, value: CostInputs[K]) => {
     setInputs((previous) => ({ ...previous, [key]: value }));
@@ -107,8 +107,10 @@ export default function CostCalculatorSection() {
   };
 
   const travelers = Math.max(1, Math.round(nonNegative(inputs.travelers)) || 1);
-  const fuel = (TOTAL_DISTANCE / 100) * nonNegative(inputs.fuelEfficiency) * nonNegative(inputs.fuelPrice);
-  const pendingHotel = PENDING_HOTEL_NIGHTS * nonNegative(inputs.pendingHotelAverage);
+  const pendingHotelNights = getPendingHotelNights(returnPlan);
+  const routeDistance = getRouteDistanceForReturnPlan(returnPlan);
+  const fuel = (routeDistance / 100) * nonNegative(inputs.fuelEfficiency) * nonNegative(inputs.fuelPrice);
+  const pendingHotel = pendingHotelNights * nonNegative(inputs.pendingHotelAverage);
   const food = DAYS * travelers * nonNegative(inputs.foodPerPersonPerDay);
   const flexibleCosts = nonNegative(inputs.tolls)
     + pendingHotel
@@ -132,7 +134,7 @@ export default function CostCalculatorSection() {
         >
           <span className="section-number">05 / BUDGET</span>
           <h2 className="section-title">成本<span className="highlight">计算</span></h2>
-          <p className="section-editorial">已确认费用先落账，其余项目按你的实际开销自由补全</p>
+          <p className="section-editorial">{returnPlan === "weather" ? "已按天气备选路线计算待订住宿与返程成本" : "已确认费用先落账，其余项目按你的实际开销自由补全"}</p>
           <div className="section-divider" />
         </motion.div>
 
@@ -159,10 +161,11 @@ export default function CostCalculatorSection() {
                   <p className="text-xs text-[#526A59]">已确认住宿</p>
                   <p className="mt-1 text-xl font-semibold tabular-nums">{money(CONFIRMED_STAYS)}</p>
                 </div>
-                <span className="rounded-full bg-[#526A59] px-2.5 py-1 text-[10px] text-white">3 个订单 · 6 晚</span>
+                <span className="rounded-full bg-[#526A59] px-2.5 py-1 text-[10px] text-white">4 个订单 · 7 晚</span>
               </div>
               <div className="mt-4 space-y-2 text-xs text-[#526A59]">
                 <p className="flex justify-between gap-3"><span>大理缦山缦海 · 3 晚</span><span className="tabular-nums">¥780</span></p>
+                <p className="flex justify-between gap-3"><span>昆明曼棠·V · 1 晚</span><span className="tabular-nums">¥298</span></p>
                 <p className="flex justify-between gap-3"><span>香格里拉如愿 · 2 晚</span><span className="tabular-nums">¥694.96</span></p>
                 <p className="flex justify-between gap-3"><span>阅归 Scenic · 第 3 晚</span><span className="tabular-nums">¥317</span></p>
               </div>
@@ -200,9 +203,9 @@ export default function CostCalculatorSection() {
             <div className="grid gap-3 sm:grid-cols-2">
               <NumberField label="同行人数" hint="至少 1 人" value={inputs.travelers} prefix="" suffix="人" onChange={(value) => update("travelers", Math.max(1, Math.round(value) || 1))} />
               <NumberField label="过路费" hint="全程估算" value={inputs.tolls} suffix="总额" onChange={(value) => update("tolls", value)} />
-              <NumberField label="油耗" hint={`${TOTAL_DISTANCE} km`} value={inputs.fuelEfficiency} prefix="" suffix="L/100km" onChange={(value) => update("fuelEfficiency", value)} />
+              <NumberField label="油耗" hint={`${routeDistance} km`} value={inputs.fuelEfficiency} prefix="" suffix="L/100km" onChange={(value) => update("fuelEfficiency", value)} />
               <NumberField label="油价" hint="按实际油品" value={inputs.fuelPrice} prefix="¥" suffix="/ L" onChange={(value) => update("fuelPrice", value)} />
-              <NumberField label="待订酒店均价" hint={`${PENDING_HOTEL_NIGHTS} 晚待订`} value={inputs.pendingHotelAverage} suffix="/ 晚" onChange={(value) => update("pendingHotelAverage", value)} />
+              <NumberField label="待订酒店均价" hint={`${pendingHotelNights} 晚待订`} value={inputs.pendingHotelAverage} suffix="/ 晚" onChange={(value) => update("pendingHotelAverage", value)} />
               <NumberField label="餐饮预算" hint={`${DAYS} 天 × ${travelers} 人`} value={inputs.foodPerPersonPerDay} suffix="/人/天" onChange={(value) => update("foodPerPersonPerDay", value)} />
               <NumberField label="门票与体验" hint="景区、活动" value={inputs.tickets} suffix="总额" onChange={(value) => update("tickets", value)} />
               <NumberField label="停车与车况" hint="停车、洗车等" value={inputs.parkingAndCarCare} suffix="总额" onChange={(value) => update("parkingAndCarCare", value)} />
@@ -211,7 +214,7 @@ export default function CostCalculatorSection() {
             </div>
 
             <div className="mt-5 rounded-xl bg-[#F7F3EA] px-4 py-3 text-[11px] leading-relaxed text-[#526A59]">
-              待订住宿包括飞来寺 2 晚、丽江 1 晚、百色 1 晚。玉林为家中团圆，不计酒店费用；昆明、大理与香格里拉住宿已确认。
+              {getPendingHotelSummary(returnPlan)} 昆明、大理与香格里拉住宿已确认。
             </div>
           </div>
         </motion.div>

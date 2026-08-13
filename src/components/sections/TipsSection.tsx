@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
 
 const tips = [
   {
@@ -8,14 +10,14 @@ const tips = [
     title: "高原反应预防",
     content:
       "香格里拉（3300m）至白马雪山垭口（约4300m）海拔变化明显。出发前如有基础疾病或担心高反，请向医生咨询并做好个人健康准备。",
-    keyAction: "选择供氧房住宿，抵达后放慢节奏、避免饮酒和剧烈运动；若不适加重，及时下撤并寻求医疗帮助。",
+    keyAction: "飞来寺车宿请先确认允许停放区域；保暖睡袋、保温水、便携氧气和满电电源必备。若不适加重，及时下撤并寻求医疗帮助。",
     priority: "high",
   },
   {
     icon: "🚗",
     title: "自驾注意事项",
     content:
-      "全程约3960km，Day 2 玉林至昆明与 Day 12 丽江至百色都是超长驾驶日，建议两人轮流驾驶、严控疲劳。",
+      "主线全程约4380km，Day 2 玉林至昆明、Day 12 昆明至南宁与 Day 13 南宁至深圳都是长驾驶日，建议两人轮流驾驶、严控疲劳。",
     keyAction: "国庆期间提前加油，避免排长队。弯道务必减速鸣笛。",
     priority: "high",
   },
@@ -46,16 +48,41 @@ const tips = [
   {
     icon: "💰",
     title: "预算参考",
-    content: "13天预算需预留弹性：飞来寺、丽江与百色住宿仍待预订；昆明、大理与香格里拉住宿已确认。油费和过路费以3960km测算。",
+    content: "主线预算需预留弹性：飞来寺为车宿不计酒店费用，丽江、昆明与南宁住宿仍待预订；大理与香格里拉住宿已确认。油费和过路费以约4380km测算。",
     keyAction: "多备现金，高原地区部分商户不支持移动支付。",
     priority: "low",
   },
 ];
 
 export default function TipsSection() {
-  const highPriority = tips.filter((t) => t.priority === "high");
-  const mediumPriority = tips.filter((t) => t.priority === "medium");
-  const lowPriority = tips.filter((t) => t.priority === "low");
+  const [returnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
+  const activeTips = returnPlan === "weather" ? tips.map((tip) => {
+    if (tip.title === "高原反应预防") return {
+      ...tip,
+      content: "备选路线最高停留在香格里拉约3300m，随后下撤至丽江、昆明与南宁，海拔压力明显降低。",
+      keyAction: "香格里拉仍建议放慢节奏；确认不去飞来寺后，无需准备白马雪山垭口的极寒装备。",
+    };
+    if (tip.title === "自驾注意事项") return {
+      ...tip,
+      content: "备选全程约4040km；Day 2 玉林至昆明、Day 11 昆明至南宁，以及 Day 13 南宁至深圳都是长驾驶日。南宁连住两晚后再走最后一程。",
+    };
+    if (tip.title === "摄影最佳时间") return {
+      ...tip,
+      content: "备选路线不等日照金山；把清晨留给丽江古城与玉龙雪山视野，傍晚重点拍古城灯火和沿途秋色。",
+    };
+    if (tip.title === "穿衣指南") return {
+      ...tip,
+      content: "不去飞来寺后无需按梅里雪山清晨的极寒准备，但香格里拉早晚仍冷，保留羽绒服与防风外套即可。",
+    };
+    if (tip.title === "预算参考") return {
+      ...tip,
+      content: "天气备选下，丽江、昆明各待订1晚，南宁待订2晚；飞来寺一晚无需预订，备选返程不经过百色。油费与过路费可按实际导航再更新。",
+    };
+    return tip;
+  }) : tips;
+  const highPriority = activeTips.filter((t) => t.priority === "high");
+  const mediumPriority = activeTips.filter((t) => t.priority === "medium");
+  const lowPriority = activeTips.filter((t) => t.priority === "low");
 
   return (
     <section

@@ -4,7 +4,8 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { travelImages, fallbackImage } from "@/data/travel-images";
-import { TOTAL_DISTANCE, MAX_ALTITUDE } from "@/data/tripData";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { getMaxAltitudeForReturnPlan, getRouteDistanceForReturnPlan, RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
 
 export default function HeroSection() {
   const ref = useRef(null);
@@ -19,6 +20,9 @@ export default function HeroSection() {
   const [showIndicator, setShowIndicator] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [returnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
+  const routeDistance = getRouteDistanceForReturnPlan(returnPlan);
+  const maxAltitude = getMaxAltitudeForReturnPlan(returnPlan);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -38,8 +42,8 @@ export default function HeroSection() {
 
   const stats = [
     { value: "13", unit: "DAYS", label: "旅程" },
-    { value: String(TOTAL_DISTANCE), unit: "KM", label: "总里程" },
-    { value: String(MAX_ALTITUDE), unit: "M", label: "最高海拔" },
+    { value: String(routeDistance), unit: "KM", label: "总里程" },
+    { value: String(maxAltitude), unit: "M", label: "最高海拔" },
     { value: "9.25\u201310.7", unit: "", label: "行程日期" },
   ];
 
@@ -91,7 +95,7 @@ export default function HeroSection() {
         {/* 3. Route */}
         <motion.p initial={{ opacity: 0, y: 16 }} animate={showContent ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.5 }}
           className="font-medium whitespace-nowrap" style={{ color: "#df7832", marginBottom: isMobile ? "8px" : "10px", fontSize: isMobile ? "14px" : "15px", lineHeight: isMobile ? "1.4" : "1.5", letterSpacing: isMobile ? "0.025em" : "0.04em" }}>
-          深圳 → 玉林 → 梅里 → 丽江 → 深圳 · {TOTAL_DISTANCE} km
+          {returnPlan === "weather" ? "深圳 → 玉林 → 丽江 → 昆明 → 南宁 → 深圳" : "深圳 → 玉林 → 梅里 → 丽江 → 昆明 → 南宁 → 深圳"} · {routeDistance} km
         </motion.p>
 
         {/* 4. Description */}

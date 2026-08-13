@@ -10,6 +10,7 @@ import HotelSection from "@/components/sections/HotelSection";
 import PackingSection from "@/components/sections/PackingSection";
 import CostCalculatorSection from "@/components/sections/CostCalculatorSection";
 import TipsSection from "@/components/sections/TipsSection";
+import RoadbookDownloadSection from "@/components/sections/RoadbookDownloadSection";
 import Footer from "@/components/ui/Footer";
 
 export default function Home() {
@@ -36,8 +37,9 @@ export default function Home() {
         {/* 6. Cost calculator */}
         <CostCalculatorSection />
 
-        {/* 7. Tips & Footer */}
+        {/* 7. Tips, downloadable roadbook & Footer */}
         <TipsSection />
+        <RoadbookDownloadSection />
         <Footer />
       </main>
     </MotionConfig>

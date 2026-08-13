@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
 
 const navItems = [
   { id: "journey-map", label: "路线", num: "01" },
@@ -16,6 +18,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [returnPlan, setReturnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -52,6 +55,17 @@ export default function Navbar() {
     }
     setMobileOpen(false);
   };
+
+  const planSwitch = (
+    <div role="group" aria-label="全局行程方案切换" className="inline-flex items-center rounded-full border border-[#102033]/10 bg-white/90 p-1 shadow-[0_4px_12px_rgba(16,32,51,0.06)]">
+      {(["main", "weather"] as ReturnPlan[]).map((plan) => {
+        const active = returnPlan === plan;
+        return <motion.button key={plan} type="button" onClick={() => setReturnPlan(plan)} whileTap={reduceMotion ? undefined : { scale: 0.96 }} aria-pressed={active} className={`min-h-8 rounded-full px-3 text-[10px] font-medium shadow-sm transition-colors ${active ? (plan === "main" ? "bg-[#C66A2B] text-white" : "bg-[#607E6C] text-white") : "text-[#526A59] hover:bg-[#F7F3EA] hover:text-[#102033]"}`}>
+          {plan === "main" ? "主线" : "备选"}
+        </motion.button>;
+      })}
+    </div>
+  );
 
   return (
     <>
@@ -108,6 +122,7 @@ export default function Navbar() {
 
           {/* ── Desktop meta ── */}
           <div className="hidden md:flex justify-self-end items-center gap-[10px]">
+            {planSwitch}
             <span className="text-[9px] leading-none tracking-[0.12em]" style={{ color: "#526A59" }}>2026.09.25</span>
             <span style={{ width: "16px", height: "1px", background: "rgba(16,32,51,0.18)" }} />
             <span className="text-[9px] leading-none tracking-[0.12em]" style={{ color: "#526A59" }}>13 DAYS</span>
@@ -207,6 +222,12 @@ export default function Navbar() {
                   </motion.button>
                 ))}
               </nav>
+
+              <div className="mt-8 rounded-2xl border border-[#102033]/10 bg-[#F7F3EA] p-4">
+                <p className="mb-3 font-mono text-[10px] tracking-[0.14em] text-[#526A59]">行程方案</p>
+                {planSwitch}
+                <p className="mt-3 text-[11px] leading-5 text-[#526A59]">{returnPlan === "main" ? "主线：飞来寺车宿一晚，等日照金山。" : "备选：跳过飞来寺，南宁连住两晚。"}</p>
+              </div>
 
               {/* ── Footer meta ── */}
               <div className="w-full flex justify-between items-end" style={{ marginTop: "auto", paddingTop: "24px" }}>
