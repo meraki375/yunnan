@@ -2,6 +2,7 @@
 
 import { MotionConfig } from "framer-motion";
 import Navbar from "@/components/ui/Navbar";
+import AmbientMusic from "@/components/ui/AmbientMusic";
 import ReadingProgress from "@/components/ui/ReadingProgress";
 import HeroSection from "@/components/sections/HeroSection";
 import JourneyMap from "@/components/sections/JourneyMap";
@@ -20,6 +21,7 @@ export default function Home() {
     <MotionConfig reducedMotion="user">
       <TripDataProvider>
       <main className="relative">
+        <AmbientMusic />
         <Navbar />
         <ReadingProgress />
         {/* 1. Full-screen immersive Hero */}
