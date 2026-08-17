@@ -10,7 +10,8 @@ const chapters = [
   { id: "travel-intel", number: "03", label: "情报" },
   { id: "packing", number: "04", label: "行囊" },
   { id: "costs", number: "05", label: "预算" },
-  { id: "tips", number: "06", label: "附录" },
+  { id: "memos", number: "06", label: "备忘" },
+  { id: "tips", number: "07", label: "附录" },
 ];
 
 export default function ReadingProgress() {
@@ -69,7 +70,7 @@ export default function ReadingProgress() {
 
       <div className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 xl:hidden" aria-live="polite">
         <div className="flex items-center gap-2 rounded-full border border-[#102033]/10 bg-[#FFFDF8]/95 px-3 py-2 shadow-[0_8px_24px_rgba(16,32,51,0.12)] backdrop-blur">
-          <span className="font-mono text-[10px] text-[#C66A2B]">{activeChapter.number}/06</span>
+          <span className="font-mono text-[10px] text-[#C66A2B]">{activeChapter.number}/07</span>
           <span className="h-3 w-px bg-[#102033]/12" />
           <span className="text-[11px] font-medium text-[#334155]">{activeChapter.label}</span>
           {activeChapter.id === "timeline" && <><span className="h-3 w-px bg-[#102033]/12" /><span className="font-mono text-[10px] text-[#526A59]">DAY {dayNumber}/13</span></>}

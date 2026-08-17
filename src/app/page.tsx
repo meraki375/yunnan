@@ -12,10 +12,13 @@ import CostCalculatorSection from "@/components/sections/CostCalculatorSection";
 import TipsSection from "@/components/sections/TipsSection";
 import RoadbookDownloadSection from "@/components/sections/RoadbookDownloadSection";
 import Footer from "@/components/ui/Footer";
+import MemoSection from "@/components/sections/MemoSection";
+import { TripDataProvider } from "@/components/providers/TripDataProvider";
 
 export default function Home() {
   return (
     <MotionConfig reducedMotion="user">
+      <TripDataProvider>
       <main className="relative">
         <Navbar />
         <ReadingProgress />
@@ -37,11 +40,15 @@ export default function Home() {
         {/* 6. Cost calculator */}
         <CostCalculatorSection />
 
-        {/* 7. Tips, downloadable roadbook & Footer */}
+        {/* 7. Shared CloudBase memo board */}
+        <MemoSection />
+
+        {/* 8. Tips, downloadable roadbook & Footer */}
         <TipsSection />
         <RoadbookDownloadSection />
         <Footer />
       </main>
+      </TripDataProvider>
     </MotionConfig>
   );
 }

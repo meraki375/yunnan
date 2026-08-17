@@ -23,7 +23,7 @@ export default function RoadbookDownloadSection() {
   return <section id="roadbook-download" className="relative overflow-hidden bg-[#F7F3EA] py-20 sm:py-28">
     <div className="section-container relative z-10">
       <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.5 }} className="mx-auto max-w-2xl text-center">
-        <span className="section-number">07 / DOWNLOAD</span>
+        <span className="section-number">08 / DOWNLOAD</span>
         <h2 className="section-title">两条路，<span className="highlight">两张攻略</span></h2>
         <p className="mt-4 text-sm leading-7 text-[#526A59]">点击海报可放大查看；需要保存时，再使用卡片下方的下载按钮。备选图不会出现飞来寺或百色。</p>
       </motion.div>

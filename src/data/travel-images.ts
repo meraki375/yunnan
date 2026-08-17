@@ -71,9 +71,9 @@ export const destinationImages: Record<string, TravelImage> = {
 };
 
 export const fallbackImage =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23102033'/%3E%3Ctext x='400' y='310' font-family='system-ui' font-size='20' fill='%23d89b3c' text-anchor='middle'%3E%E5%B1%B1%E6%B5%B7%E8%B5%B4%E7%BA%A6%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23102033'/%3E%3Ctext x='400' y='310' font-family='serif' font-size='20' fill='%23d89b3c' text-anchor='middle'%3E%E5%B1%B1%E6%B5%B7%E8%B5%B4%E7%BA%A6%3C/text%3E%3C/svg%3E";
 
 export const placeholderImage =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23F7F3EA'/%3E%3Ctext x='400' y='300' font-family='system-ui' font-size='13' fill='%23A8A29E' text-anchor='middle'%3E%E5%BE%85%E8%A1%A5%E5%85%85%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23F7F3EA'/%3E%3Ctext x='400' y='300' font-family='serif' font-size='13' fill='%23A8A29E' text-anchor='middle'%3E%E5%BE%85%E8%A1%A5%E5%85%85%3C/text%3E%3C/svg%3E";
 
 export default travelImages;

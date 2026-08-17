@@ -2,37 +2,13 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { getPendingHotelNights, getPendingHotelSummary, getRouteDistanceForReturnPlan, RETURN_PLAN_STORAGE_KEY, type ReturnPlan } from "@/data/returnPlan";
-
-type CostInputs = {
-  travelers: number;
-  fuelEfficiency: number;
-  fuelPrice: number;
-  tolls: number;
-  pendingHotelAverage: number;
-  foodPerPersonPerDay: number;
-  tickets: number;
-  parkingAndCarCare: number;
-  photographyAndMisc: number;
-  contingency: number;
-};
+import { type CostInputs } from "@/data/tripState";
+import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { useTripData } from "@/components/providers/TripDataProvider";
 
 const DAYS = 13;
 const CONFIRMED_STAYS = 298 + 780 + 694.96 + 317;
-
-const INITIAL_INPUTS: CostInputs = {
-  travelers: 2,
-  fuelEfficiency: 8.5,
-  fuelPrice: 7.6,
-  tolls: 0,
-  pendingHotelAverage: 0,
-  foodPerPersonPerDay: 0,
-  tickets: 0,
-  parkingAndCarCare: 0,
-  photographyAndMisc: 0,
-  contingency: 0,
-};
 
 const FIELD_LABELS: Record<keyof CostInputs, string> = {
   travelers: "同行人数",
@@ -98,11 +74,11 @@ function NumberField({ label, hint, value, prefix = "¥", suffix, onChange }: Nu
 }
 
 export default function CostCalculatorSection() {
-  const [inputs, setInputs] = useLocalStorageState<CostInputs>("shanhai-yueyue:cost-inputs", INITIAL_INPUTS);
+  const { costInputs: inputs, updateCostInput, resetCostInputs, syncError, syncStatus } = useTripData();
   const [returnPlan] = useLocalStorageState<ReturnPlan>(RETURN_PLAN_STORAGE_KEY, "main");
   const [lastChanged, setLastChanged] = useState<keyof CostInputs | null>(null);
   const update = <K extends keyof CostInputs>(key: K, value: CostInputs[K]) => {
-    setInputs((previous) => ({ ...previous, [key]: value }));
+    updateCostInput(key, value);
     setLastChanged(key);
   };
 
@@ -178,7 +154,7 @@ export default function CostCalculatorSection() {
               <div><dt className="text-[10px] text-[#526A59]">其他弹性支出</dt><dd className="mt-1 text-sm font-medium tabular-nums">{money(flexibleCosts - pendingHotel - food)}</dd></div>
             </dl>
 
-            <p className="mt-7 text-[11px] leading-relaxed text-[#526A59]">计算数据仅保存在这台设备的浏览器内，不会上传到服务器；清除浏览器网站数据后会一并清除。</p>
+            <p className="mt-7 text-[11px] leading-relaxed text-[#526A59]">{syncStatus === "error" ? syncError : syncStatus === "saving" || syncStatus === "connecting" ? "正在将预算同步到 CloudBase…" : "预算已保存到你的 CloudBase 私有数据中，可在本设备继续编辑。"}</p>
           </div>
 
           <div className="px-5 py-7 sm:px-8 sm:py-8">
@@ -192,7 +168,7 @@ export default function CostCalculatorSection() {
               </div>
               <motion.button
                 type="button"
-                onClick={() => { setInputs(INITIAL_INPUTS); setLastChanged(null); }}
+                onClick={() => { resetCostInputs(); setLastChanged(null); }}
                 whileTap={{ scale: 0.95 }}
                 className="rounded-full border border-[#102033]/12 px-3 py-1.5 text-[11px] text-[#526A59] transition-colors hover:border-[#526A59]/45 hover:bg-[#526A59]/5"
               >

@@ -87,7 +87,7 @@ export default function HeroSection() {
 
         {/* 2. Title */}
         <motion.h1 initial={{ opacity: 0, y: 24 }} animate={showContent ? { opacity: 1, y: 0 } : {}} transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-          className="font-serif font-medium tracking-[-0.035em] max-w-[900px] box-border"
+          className="font-display font-normal tracking-[-0.035em] max-w-[900px] box-border"
           style={{ color: "#f7f4ee", textShadow: "0 3px 22px rgba(0,0,0,0.22)", marginBottom: isMobile ? "18px" : "20px", fontSize: isMobile ? "clamp(52px, 15vw, 68px)" : "clamp(68px, 5vw, 94px)", lineHeight: "1.08", letterSpacing: isMobile ? "-0.04em" : "-0.035em", paddingLeft: isMobile ? "24px" : "32px", paddingRight: isMobile ? "24px" : "32px", display: isMobile ? "flex" : "block", flexDirection: isMobile ? "column" : undefined, gap: isMobile ? "2px" : undefined }}>
           {isMobile ? <><span>穿过山海</span><span>去见你</span></> : "穿过山海去见你"}
         </motion.h1>

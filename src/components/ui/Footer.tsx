@@ -28,7 +28,7 @@ export default function Footer() {
           <p className="mb-4 font-mono text-[10px] tracking-[0.2em] text-[#C66A2B]">
             · EPILOGUE ·
           </p>
-          <h2 className="mx-auto max-w-2xl font-serif text-2xl font-light leading-relaxed text-[#102033] sm:text-3xl md:text-4xl">
+          <h2 className="mx-auto max-w-2xl font-serif text-2xl font-semibold leading-relaxed text-[#102033] sm:text-3xl md:text-4xl">
             「穿越 3960 公里，把团圆、雪山与归途写进同一页。」
           </h2>
           <p className="mt-4 font-mono text-[10px] tracking-[0.08em] text-[#526A59] sm:text-xs">
@@ -40,7 +40,7 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-9 border-y border-[#102033]/12 py-8 sm:grid-cols-2 sm:gap-8 sm:py-10 lg:grid-cols-4">
           {/* Brand */}
           <div className="col-span-2 lg:col-span-2">
-            <h3 className="text-lg font-bold tracking-tight mb-2">
+            <h3 className="mb-2 font-display text-lg font-normal tracking-[0.03em]">
               <span className="text-[#C66A2B]">山海</span>赴约
             </h3>
             <p className="max-w-md text-xs leading-relaxed text-[#334155]">
@@ -69,7 +69,7 @@ export default function Footer() {
           {/* Navigation */}
           <div>
             <h4 className="mb-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#C66A2B]">
-              01–06
+              01–07
             </h4>
             <ul className="space-y-2">
               {[
@@ -96,13 +96,14 @@ export default function Footer() {
 
           <div>
             <h4 className="mb-4 font-mono text-[10px] uppercase tracking-[0.16em] text-[#C66A2B]">
-              04–06
+              04–07
             </h4>
             <ul className="space-y-2">
               {[
                 { id: "packing", label: "行囊", num: "04" },
                 { id: "costs", label: "预算", num: "05" },
-                { id: "tips", label: "附录", num: "06" },
+                { id: "memos", label: "备忘", num: "06" },
+                { id: "tips", label: "附录", num: "07" },
               ].map((link) => (
                 <li key={link.id}>
                   <motion.button

@@ -102,7 +102,7 @@ export default function TipsSection() {
           transition={{ duration: 0.6 }}
           className="section-header"
         >
-          <span className="section-number">06 / APPENDIX</span>
+          <span className="section-number">07 / APPENDIX</span>
           <h2 className="section-title">
             实用<span className="highlight">附录</span>
           </h2>

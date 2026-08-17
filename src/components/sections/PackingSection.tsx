@@ -2,19 +2,14 @@
 
 import { motion } from "framer-motion";
 import { packingList } from "@/data/tripData";
-import { useLocalStorageState } from "@/hooks/useLocalStorageState";
+import { useTripData } from "@/components/providers/TripDataProvider";
 
 export default function PackingSection() {
-  const [checkedItemIds, setCheckedItemIds] = useLocalStorageState<string[]>("shanhai-yueyue:packing-checked", []);
+  const { checkedItemIds, togglePackingItem } = useTripData();
   const checkedItems = new Set(checkedItemIds);
 
   const toggleItem = (item: string) => {
-    setCheckedItemIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(item)) next.delete(item);
-      else next.add(item);
-      return [...next];
-    });
+    togglePackingItem(item);
   };
 
   const totalItems = packingList.reduce((acc, cat) => acc + cat.items.length, 0);

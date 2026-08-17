@@ -479,7 +479,7 @@ export default function HotelSection() {
                             y={y + 3}
                             fontSize="7"
                             fill="#A8A29E"
-                            fontFamily="monospace"
+                            fontFamily="var(--font-mono)"
                           >
                             {alt}m
                           </text>
@@ -545,7 +545,7 @@ export default function HotelSection() {
                             fontSize={isHigh ? "8" : "7"}
                             fill={isHigh ? "#A63D40" : isLow ? "#A8A29E" : "#334155"}
                             fontWeight={isHigh ? "600" : "400"}
-                            fontFamily="system-ui"
+                            fontFamily="var(--font-serif)"
                           >
                             {c.city}
                           </text>
@@ -555,7 +555,7 @@ export default function HotelSection() {
                             textAnchor="middle"
                             fontSize="6"
                             fill="#A8A29E"
-                            fontFamily="monospace"
+                            fontFamily="var(--font-mono)"
                           >
                             {c.alt}m
                           </text>

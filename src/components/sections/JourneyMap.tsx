@@ -123,7 +123,7 @@ export default function JourneyMap() {
                   <g key={stop.name}>
                     <circle cx={stop.x} cy={stop.y} r="14" fill={outbound ? "#C66A2B" : "#607E6C"} stroke="#FFFDF8" strokeWidth="6" />
                     <text x={stop.x} y={stop.y - 25} textAnchor={stop.anchor as "start" | "middle" | "end"} fill="#102033" fontSize="25" fontWeight="700" style={{ paintOrder: "stroke", stroke: "#FFFDF8", strokeWidth: 6, strokeLinejoin: "round" }}>{stop.name}</text>
-                    <text x={stop.x} y={stop.y + 38} textAnchor={stop.anchor as "start" | "middle" | "end"} fill="#526A59" fontSize="16" fontFamily="monospace" style={{ paintOrder: "stroke", stroke: "#FFFDF8", strokeWidth: 5, strokeLinejoin: "round" }}>{stop.day}</text>
+                    <text x={stop.x} y={stop.y + 38} textAnchor={stop.anchor as "start" | "middle" | "end"} fill="#526A59" fontSize="16" fontFamily="var(--font-mono)" style={{ paintOrder: "stroke", stroke: "#FFFDF8", strokeWidth: 5, strokeLinejoin: "round" }}>{stop.day}</text>
                   </g>
                 );
               })}

@@ -11,7 +11,8 @@ const navItems = [
   { id: "travel-intel", label: "情报", num: "03" },
   { id: "packing", label: "行囊", num: "04" },
   { id: "costs", label: "预算", num: "05" },
-  { id: "tips", label: "附录", num: "06" },
+  { id: "memos", label: "备忘", num: "06" },
+  { id: "tips", label: "附录", num: "07" },
 ];
 
 export default function Navbar() {
@@ -90,7 +91,7 @@ export default function Navbar() {
             className="flex flex-col flex-shrink-0 rounded-md px-1 py-1 transition-transform active:scale-95"
             aria-label="回到顶部"
           >
-            <span className="text-[22px] md:text-[17px] font-medium leading-none tracking-[0.04em]"
+            <span className="font-display text-[22px] md:text-[17px] font-normal leading-none tracking-[0.04em]"
               style={{ color: "#102033", transition: "color 240ms ease" }}>
               <span style={{ color: "#C66A2B" }}>山海</span>
               <span>赴约</span>
@@ -172,7 +173,7 @@ export default function Navbar() {
               <div className="w-full flex items-start justify-between" style={{ minHeight: "56px" }}>
                 {/* Brand */}
                 <div className="flex flex-col">
-                  <span className="text-[22px] font-medium leading-none tracking-[0.04em] whitespace-nowrap"
+                  <span className="font-display text-[22px] font-normal leading-none tracking-[0.04em] whitespace-nowrap"
                     style={{ color: "#102033" }}>
                     <span style={{ color: "#C66A2B" }}>山海</span>
                     <span>赴约</span>
